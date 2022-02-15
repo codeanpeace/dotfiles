@@ -129,14 +129,17 @@ nmap <leader>tt :NERDTreeToggle<CR>
 nmap  -  <Plug>(choosewin)
 let g:choosewin_overlay_enable = 1
 
-" The Silver Searcher
-if executable('ag')
-  " Use ag over grep
+" Faster grep with ripgrep
+if executable('rg')
+  " Use rg over grep
   set grepprg=ag\ --nogroup\ --nocolor
+  set grepprg=rg\ --vimgrep\ --smart-case\ --follow
+  set grepformat=%f:%l:%c:%m,%f:%l:%m
+  nmap <silent> <space>/ :Rg<CR>
+  " search only file contents, ignore file name
+  " https://dev.to/iggredible/how-to-search-faster-in-vim-with-fzf-vim-36ko
+  command! -bang -nargs=* Rg call fzf#vim#grep("rg --column --line-number --no-heading --color=always --smart-case ".shellescape(<q-args>), 1, {'options': '--delimiter : --nth 4..'}, <bang>0)
 endif
-" --- type ° to search the word in all files in the current dir
-nmap ° :Ag <c-r>=expand("<cword>")<cr><cr>
-nmap <space>/ :Ag
 
 """"""""""""""""""""""""""""""""""""""""""""""""""
 " fzf fuzzy finder configuration

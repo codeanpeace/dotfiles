@@ -29,6 +29,10 @@ export PATH="/usr/local/heroku/bin:$PATH"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if type rg &> /dev/null; then
+  export FZF_DEFAULT_COMMAND='rg --files'
+  export FZF_DEFAULT_OPTS='-m --height 50% --border'
+fi
 
 # tmuxinator
 [ -f ~/.tmuxinator/tmuxinator.zsh ] && source ~/.tmuxinator/tmuxinator.zsh
